@@ -1,0 +1,18 @@
+MB_HOST=`hostname`
+MB_USER=`whoami`
+MB_BQM=`dspmq | cut -c8-15`
+MB_CMQM=`dspmq | grep CFG | cut -c8-15`
+MB_BQMP=1415
+MB_CMQMP=1415
+MB_REALPC=`who | cut -c0-7`
+MB_REALUSER="( *** User Not Recognised *** )"
+BROKER='UESBBRK10'
+ENVIRONMENT='POC-IIB10'
+BRK_MQ_ADMIN_GRP='mbfull'
+BRK_MQ_READ_GRP='mbread'
+WEBADMMIN_USER_ROLE_var='jmcvica'
+WEBADMMIN_ADMIN_ROLE_var='mbroker'
+export PATH=$PATH:.
+export JAVA_HOME=/opt/ibm/iib-10.0.631.0/common/jdk/bin/
+export PATH={JAVA_HOME}:$PATH
+
