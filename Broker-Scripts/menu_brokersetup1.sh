@@ -1,13 +1,12 @@
 #!/bin/ksh
 #-------------------------------------------------------------------------------------------
-# Copyright 2014 National Australia Bank, Ltd
+# Copyright 2014 TRI Tech 
 #
 # All rights reserved.
 # Warning: No part of this work covered by copyright may be reproduced,
 # distributed or copied in any form or by any means (graphic, electronic
 # or mechanical, including photocopying, recording, taping, or information
-# retrieval systems) without the written permission of National Australia
-# Bank, Ltd.
+# retrieval systems) without the written permission of Tri Tech.
 # Unauthorised reproduction, distribution or copying of this work may
 # result in severe civil and criminal penalties, and will be prosecuted
 # to the maximum extent possible under the law.

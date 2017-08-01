@@ -23,13 +23,6 @@
 # Description:  Used to set up Kernal settings, directories and install 0S tools
 #
 #------------------------------------------------------------------------------------------
-
-
-echo "=================================================================" >> brksetuplog.txt
-echo "=                       " >> brksetuplog.txt
-date >> brksetuplog.txt
-echo "=                                                                " >> brksetuplog.txt
-
 if [ "X$1" != "X" ]
 then
         GOARG=$1
@@ -50,7 +43,7 @@ function func_Option {
 #------------------------------------------------------------------------------------------
 
 		'SystemSetup')
-
+    echo "`/bin/bash ./opt/setup/kernal/kernal_settings.sh`" # exact path for the script file
 		echo; echo "   ------- Completed System Setup -------"
      ;;
 
@@ -61,7 +54,9 @@ function func_Option {
 
 
 		'SystemUtilsSetup')
-	  echo ; echo "   ------- Competed Directory Setup -------"
+    echo "`/bin/bash ./opt/setup/packages/packages.sh`" # exact path for the script file
+
+	  echo ; echo "   ------- Competed installing packages -------"
     ;;
 
     'SystemUserSetup')
