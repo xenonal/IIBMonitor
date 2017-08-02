@@ -49,19 +49,22 @@ function func_Option {
 # *************************      Setup Unix Environment       *******************************
 #------------------------------------------------------------------------------------------
 
-		'SystemSetup')
 
-		echo; echo "   ------- Completed System Setup -------"
+                'SystemSetup')
+    echo "`. /opt/setup/kernal/kernal_settings.sh`" # exact path for the script file
+                echo; echo "   ------- Completed System Setup -------"
      ;;
 
-		'CreateDirectories')
+                'CreateDirectories')
 
-		echo ; echo "   ------- Competed Directory Setup -------"
+                echo ; echo "   ------- Competed Directory Setup -------"
     ;;
 
 
-		'SystemUtilsSetup')
-	  echo ; echo "   ------- Competed Directory Setup -------"
+                'SystemUtilsSetup')
+    echo "`. /opt/setup/packages/packages.sh`" # exact path for the script file
+
+          echo ; echo "   ------- Competed Directory Setup -------"
     ;;
 
     'SystemUserSetup')
@@ -73,6 +76,8 @@ function func_Option {
     *)
     echo "   ---- Incorrect Parameter Specified"; echo
     ;;
+  esac
+
   esac
 
 }
