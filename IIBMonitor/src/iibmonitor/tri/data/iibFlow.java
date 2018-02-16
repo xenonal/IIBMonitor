@@ -16,6 +16,8 @@ import java.util.*;
 public class iibFlow {
     
     private String name;
+    private String isRunning;
+    private String version; // monitor will need to be set up on this to look at the current and if the version is diffrent for the broker to apply heavier monitoring
     private ArrayList<Queue> queues;
    
   
@@ -23,8 +25,10 @@ public class iibFlow {
     public iibFlow(){
         
     }
-    public iibFlow(String name,ArrayList<Queue> queues){
+    public iibFlow(String name, String isRunning, String version, ArrayList<Queue> queues){
         this.name = name;
+        this.isRunning = isRunning;
+        this.version = version;
         this.queues = queues;
     }
 
@@ -54,6 +58,34 @@ public class iibFlow {
      */
     public void setQueues(ArrayList<Queue> queues) {
         this.queues = queues;
+    }
+
+    /**
+     * @return the isRunning
+     */
+    public String getIsRunning() {
+        return isRunning;
+    }
+
+    /**
+     * @param isRunning the isRunning to set
+     */
+    public void setIsRunning(String isRunning) {
+        this.isRunning = isRunning;
+    }
+
+    /**
+     * @return the version
+     */
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     

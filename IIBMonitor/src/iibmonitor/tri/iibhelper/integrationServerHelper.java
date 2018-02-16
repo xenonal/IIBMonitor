@@ -33,7 +33,7 @@ public class integrationServerHelper {
         while (allEGs.hasMoreElements()) {
             ExecutionGroupProxy thisEG = allEGs.nextElement();
 
-            IntegrationServer intServ = new IntegrationServer(thisEG.getName(), null, iibNode.getBp());
+            IntegrationServer intServ = new IntegrationServer(thisEG.getName(), thisEG.getBasicProperties().getProperty("uuid"), thisEG.getBasicProperties().getProperty("isRunning"), null, iibNode.getBp());
             intFlowList = iibflowHelp.getIntServers(intServ,qm);
             intServ.setFlowList(intFlowList);
             intServerList.add(intServ);

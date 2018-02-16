@@ -15,6 +15,7 @@ import iibmonitor.tri.conectivity.mq.Connect_MQ_QueueManger;
 import iibmonitor.tri.connectivity.iib.Connect_IIB;
 import iibmonitor.tri.data.IntegrationNode;
 import iibmonitor.tri.data.QueueManager;
+import iibmonitor.tri.freya.freya;
 import iibmonitor.tri.iibhelper.integrationServerHelper;
 
 /**
@@ -25,7 +26,7 @@ public class Chi {
 
     public void initIIBObjects() throws MQException, ConfigManagerProxyPropertyNotInitializedException {
 
-        String nodeName, nodePort, nodeHost, brokerFile;
+        String nodeName, nodePort, brokerFile;
         Boolean isRemote;
         BrokerProxy bp;
 
@@ -48,6 +49,10 @@ public class Chi {
         qm.setMqpcfAgent(Connect_MQ_PCFMessageAgent.getPCFMessageAgent(qm));
         //populate the integration servers details.
         intNode.setIntServerList(intHelp.getIntServers(intNode, qm));
+        
+        String test = "just here to look good";
+         freya freya = new freya();
+         freya.initMonitor(intNode);
         
         //Once the objects have been created freya will then create threads for each of the monotitors
         

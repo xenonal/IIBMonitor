@@ -23,7 +23,7 @@ public class Queue {
     private String queueName;
     private boolean exists = false;
     private int queueDepth = 0;
-    private int poleTime = 10;
+    private int poleTime = 10; // This will need to be defualted to 30 seconds or overridden via args 
     private String status = "Normal";
     private List _listeners = new ArrayList();
     private Queue _queue = Queue.this;
@@ -102,7 +102,7 @@ public class Queue {
         this.status = status;
     }
 
-    public synchronized void addMoodListener(MQListener l) {
+    public synchronized void addMQListener(MQListener l) {
         getListeners().add(l);
     }
 
