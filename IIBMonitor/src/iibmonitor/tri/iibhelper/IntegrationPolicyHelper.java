@@ -25,6 +25,8 @@ import java.util.logging.Logger;
  * @author xenon
  */
 public class IntegrationPolicyHelper {
+
+    
     
 
     public static String readPolicyFromFile(String fileName) throws IOException {
@@ -40,7 +42,7 @@ public class IntegrationPolicyHelper {
         if (isWindows) {
             filePath = "E:\\" + PolicyName + ".xml";
         } else {
-            filePath = ".//Policy//" + PolicyName + ".xml";
+            filePath = ".//lib//" + PolicyName + ".xml";
         }
         return filePath;
     }
@@ -104,7 +106,7 @@ public class IntegrationPolicyHelper {
 
         try {
             ExecutionGroupProxy e = bcp.getExecutionGroupByName(executionGroup);
-            e.getMessageFlowByName(flow).setRuntimeProperty("This/wlmPolicy", policyName);
+            e.getMessageFlowByName(flow.replace(".msgflow", "")).setRuntimeProperty("This/wlmPolicy", policyName);
             isAttached = true;
         } catch (ConfigManagerProxyPropertyNotInitializedException ex) {
             Logger.getLogger(IntegrationPolicyHelper.class.getName()).log(Level.SEVERE, null, ex);

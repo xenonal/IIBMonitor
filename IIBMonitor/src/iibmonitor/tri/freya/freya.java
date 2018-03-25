@@ -5,7 +5,7 @@
  */
 package iibmonitor.tri.freya;
 
-import com.sun.xml.internal.ws.developer.SerializationFeature;
+
 import iibmonitor.tri.listener.MQListener;
 import iibmonitor.tri.data.IntegrationNode;
 import iibmonitor.tri.data.IntegrationServer;

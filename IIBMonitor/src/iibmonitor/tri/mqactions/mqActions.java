@@ -44,8 +44,18 @@ public class mqActions implements MQListener {
                 System.out.println("");
 
                 if (policy != "none" || policy != "LOW") {
-                    polyHelp.attachPolicy(bp, "LOW", intServer, flowName);
+                    boolean policyExists = polyHelp.PolicyRetrieve(bp, "LOW");
 
+                    if (policyExists == false) {
+                        try {
+                            polyHelp.PolicyCreate(bp, "LOW");
+                            polyHelp.attachPolicy(bp, "LOW", intServer, flowName);
+                        } catch (ConfigManagerProxyPropertyNotInitializedException ex) {
+                            Logger.getLogger(mqActions.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        polyHelp.attachPolicy(bp, "LOW", intServer, flowName);
+                    }
                 }
 
             } catch (IOException ex) {
@@ -64,7 +74,19 @@ public class mqActions implements MQListener {
                     System.out.println("");
 
                     if (policy != "none" || policy != "HIGH") {
-                        polyHelp.attachPolicy(bp, "HIGH", intServer, flowName);
+
+                        boolean policyExists = polyHelp.PolicyRetrieve(bp, "HIGH");
+
+                        if (policyExists == false) {
+                            try {
+                                polyHelp.PolicyCreate(bp, "HIGH");
+                                polyHelp.attachPolicy(bp, "HIGH", intServer, flowName);
+                            } catch (ConfigManagerProxyPropertyNotInitializedException ex) {
+                                Logger.getLogger(mqActions.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            polyHelp.attachPolicy(bp, "HIGH", intServer, flowName);
+                        }
 
                     }
 
