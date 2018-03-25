@@ -12,20 +12,41 @@ import com.ibm.mq.pcf.PCFException;
 import com.ibm.mq.pcf.PCFMessage;
 import com.ibm.mq.pcf.PCFMessageAgent;
 import iibmonitor.tri.data.Queue;
-import iibmonitor.tri.data.iibFlow;
 import java.io.IOException;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author xenon
  */
-public class mqMonitor {
+public class mqMonitor implements Runnable {
  protected static Logger logger = Logger.getLogger(mqMonitor.class);
  protected static boolean isDebugEnabled = logger.isDebugEnabled();
-
+ public Queue queue;
+ 
+ public mqMonitor(Queue queue){
+     
+      this.queue = queue;
+      System.out.println("");
+ }
+ 
+public void run() {
+  
+    boolean run =true;
+  while (run == true) {
+   run = checkDepth(queue);
+   
+   
+      try {
+          Thread.sleep(10); // sleep for 30 seconds
+      } catch (InterruptedException ex) {
+          java.util.logging.Logger.getLogger(mqMonitor.class.getName()).log(Level.SEVERE, null, ex);
+      }
+   }
+}
     
-  public void checkDepth(Queue queue) {
+  public boolean checkDepth(Queue queue) {
   PCFMessageAgent agent = null;
   
   String queueName = queue.getQueueName();
@@ -74,6 +95,7 @@ public class mqMonitor {
    PCFMessage[] msgs = (PCFMessage[]) pcfe.exceptionSource;
    for (int i = 0; i < msgs.length; i++) {
     logger.error(msgs[i]);
+     return false;
     
 //This exceptio handler need to be extended as if a queue does not exist this should be considered a serious issue.    
    }
@@ -84,7 +106,9 @@ public class mqMonitor {
       queue.setMqe(mqe);
       queue.recieveMQExcpetionAlert();
    logger.error("MQException caught", mqe);
+     return false;
   }
+
   catch (IOException ioe) {
    logger.error("IOException caught", ioe);
   }
@@ -102,6 +126,7 @@ public class mqMonitor {
     logger.warn("unable to disconnect, agent is null.");
    }
   }
+  return true;
  }
     
 }

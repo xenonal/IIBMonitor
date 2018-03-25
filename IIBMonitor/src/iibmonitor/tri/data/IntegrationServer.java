@@ -4,26 +4,32 @@
  * and open the template in the editor.
  */
 package iibmonitor.tri.data;
+
 import com.ibm.broker.config.proxy.BrokerProxy;
 import java.util.*;
+
 /**
  *
  * @author xenon
  */
 public class IntegrationServer {
+
     private String name;
     private String uuid;
+    private String resourceStatsTopic;
     private String isRunning;
     private ArrayList<iibFlow> flowList;
     private BrokerProxy bp;
-    
-    public IntegrationServer(){
-        
+
+    public IntegrationServer() {
+
     }
-    public IntegrationServer(String name, String uuid, String isRunning, ArrayList<iibFlow> flowList,BrokerProxy bp){
+
+    public IntegrationServer(String name, String uuid, String resourceStatsTopic, String isRunning, ArrayList<iibFlow> flowList, BrokerProxy bp) {
         this.name = name;
-        this.uuid = uuid; 
-        this.isRunning  = isRunning;
+        this.uuid = uuid;
+        this.resourceStatsTopic = resourceStatsTopic;
+        this.isRunning = isRunning;
         this.flowList = flowList;
         this.bp = bp;
     }
@@ -96,5 +102,19 @@ public class IntegrationServer {
      */
     public void setIsRunning(String isRunning) {
         this.isRunning = isRunning;
+    }
+
+    /**
+     * @return the resourceStatsTopic
+     */
+    public String getResourceStatsTopic() {
+        return resourceStatsTopic;
+    }
+
+    /**
+     * @param resourceStatsTopic the resourceStatsTopic to set
+     */
+    public void setResourceStatsTopic(String resourceStatsTopic) {
+        this.resourceStatsTopic = resourceStatsTopic;
     }
 }

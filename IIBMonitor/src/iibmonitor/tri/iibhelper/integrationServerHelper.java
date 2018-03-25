@@ -5,6 +5,7 @@
  */
 package iibmonitor.tri.iibhelper;
 
+import com.ibm.broker.config.proxy.ConfigManagerProxyLoggedException;
 import com.ibm.broker.config.proxy.ConfigManagerProxyPropertyNotInitializedException;
 import com.ibm.broker.config.proxy.ExecutionGroupProxy;
 import com.ibm.mq.MQException;
@@ -24,7 +25,7 @@ public class integrationServerHelper {
     IntegrationNode iibNode;
     QueueManager qm;
 
-    public ArrayList<IntegrationServer> getIntServers(IntegrationNode iibNode, QueueManager qm) throws ConfigManagerProxyPropertyNotInitializedException, MQException {
+    public ArrayList<IntegrationServer> getIntServers(IntegrationNode iibNode, QueueManager qm) throws ConfigManagerProxyPropertyNotInitializedException, MQException, ConfigManagerProxyLoggedException {
         Enumeration<ExecutionGroupProxy> allEGs = iibNode.getBp().getExecutionGroups(null);
         ArrayList<IntegrationServer> intServerList = new ArrayList<IntegrationServer>();
         ArrayList<iibFlow> intFlowList = new ArrayList<iibFlow>();
@@ -33,10 +34,13 @@ public class integrationServerHelper {
         while (allEGs.hasMoreElements()) {
             ExecutionGroupProxy thisEG = allEGs.nextElement();
 
-            IntegrationServer intServ = new IntegrationServer(thisEG.getName(), thisEG.getBasicProperties().getProperty("uuid"), thisEG.getBasicProperties().getProperty("isRunning"), null, iibNode.getBp());
+            IntegrationServer intServ = new IntegrationServer(thisEG.getName(), thisEG.getBasicProperties().getProperty("uuid"),null, thisEG.getBasicProperties().getProperty("isRunning"), null, iibNode.getBp());
+            intServ.setResourceStatsTopic("$SYS/Broker/IIB10BRK/ResourceStatistics/"+thisEG.getName()+"/#");
             intFlowList = iibflowHelp.getIntServers(intServ,qm);
             intServ.setFlowList(intFlowList);
             intServerList.add(intServ);
+            
+            
 
             System.out.println("New flow has been added to the Integration Server list" + thisEG.getName());
         }

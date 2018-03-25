@@ -5,10 +5,11 @@
  */
 package iibmonitor.tri.data;
 
+import com.ibm.broker.config.proxy.BrokerProxy;
 import com.ibm.mq.MQException;
 import com.ibm.mq.pcf.PCFException;
 import com.ibm.mq.pcf.PCFMessageAgent;
-import iibmonitor.trI.listener.MQListener;
+import iibmonitor.tri.listener.MQListener;
 import iibmonitor.tri.event.MQEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +21,23 @@ import java.util.List;
  */
 public class Queue {
 
+    /**
+     * @return the executionGroup
+     */
+    public String getExecutionGroup() {
+        return executionGroup;
+    }
+
+    /**
+     * @param executionGroup the executionGroup to set
+     */
+    public void setExecutionGroup(String executionGroup) {
+        this.executionGroup = executionGroup;
+    }
+
     private String queueName;
+    private String executionGroup;
+    private String flowName;
     private boolean exists = false;
     private int queueDepth = 0;
     private int poleTime = 10; // This will need to be defualted to 30 seconds or overridden via args 
@@ -28,6 +45,7 @@ public class Queue {
     private List _listeners = new ArrayList();
     private Queue _queue = Queue.this;
     private PCFMessageAgent mqpcfAgent;
+    private BrokerProxy bp;
     private MQException mqe;
     private PCFException pcfe;
 
@@ -35,13 +53,16 @@ public class Queue {
 
     }
 
-    public Queue(String queueName, boolean exists, int queueDepth, int poleTime, String status, PCFMessageAgent mqpcfAgent, MQException mqe,PCFException pcfe) {
+    public Queue(String queueName, String excutionGroup, String flowName, boolean exists, int queueDepth, int poleTime, String status, PCFMessageAgent mqpcfAgent, BrokerProxy bp, MQException mqe, PCFException pcfe) {
         queueName = this.queueName;
+        executionGroup = this.executionGroup;
+        flowName = this.flowName;
         exists = this.exists;
         queueDepth = this.queueDepth;
         poleTime = this.poleTime;
         status = this.status;
         mqpcfAgent = this.mqpcfAgent;
+        bp = this.bp;
         mqe = this.mqe;
         pcfe = this.pcfe;
     }
@@ -110,7 +131,6 @@ public class Queue {
         getListeners().remove(l);
     }
 
-    
     //implement other MQ events to keep the code simple 
     private synchronized void _fireMQDepthEvent() {
         MQEvent mqevent = new MQEvent(this, getQueue());
@@ -119,16 +139,16 @@ public class Queue {
             ((MQListener) listeners.next()).mqDepthAlertReceived(mqevent);
         }
     }
-    
-     private synchronized void _fireMQExceptionEvent() {
+
+    private synchronized void _fireMQExceptionEvent() {
         MQEvent mqevent = new MQEvent(this, getQueue());
         Iterator listeners = getListeners().iterator();
         while (listeners.hasNext()) {
             ((MQListener) listeners.next()).mqExceptionAlertReceived(mqevent);
         }
     }
-     
-          private synchronized void _fireMQPCFEAgentExceptionEvent() {
+
+    private synchronized void _fireMQPCFEAgentExceptionEvent() {
         MQEvent mqevent = new MQEvent(this, getQueue());
         Iterator listeners = getListeners().iterator();
         while (listeners.hasNext()) {
@@ -179,30 +199,26 @@ public class Queue {
     }
 
     public synchronized void receiveQueueDepthAlert() {
-        if (Queue.this.getStatus().equalsIgnoreCase("warning") || (Queue.this.getStatus().equalsIgnoreCase("error") )) {
+        if (Queue.this.getStatus().equalsIgnoreCase("warning") || (Queue.this.getStatus().equalsIgnoreCase("error"))) {
             _fireMQDepthEvent();
         }
     }
-    
-    public synchronized void recieveMQExcpetionAlert(){
-        if (Queue.this.getMqe() != null){
+
+    public synchronized void recieveMQExcpetionAlert() {
+        if (Queue.this.getMqe() != null) {
             _fireMQExceptionEvent();
         }
     }
-    
-     public synchronized void recieveMQPCFEAgentExcpetionAlert(){
-        if (Queue.this.getMqpcfAgent() != null){
+
+    public synchronized void recieveMQPCFEAgentExcpetionAlert() {
+        if (Queue.this.getMqpcfAgent() != null) {
             _fireMQPCFEAgentExceptionEvent();
         }
     }
-    
-    
-    
+
     //// need to create alerts for MQ errors 
-    
     //MQ connection errors
     //pcfe errors when selecting mq objects.
-
     /**
      * @return the exists
      */
@@ -243,6 +259,34 @@ public class Queue {
      */
     public void setPcfe(PCFException pcfe) {
         this.pcfe = pcfe;
+    }
+
+    /**
+     * @return the bp
+     */
+    public BrokerProxy getBp() {
+        return bp;
+    }
+
+    /**
+     * @param bp the bp to set
+     */
+    public void setBp(BrokerProxy bp) {
+        this.bp = bp;
+    }
+
+    /**
+     * @return the flowName
+     */
+    public String getFlowName() {
+        return flowName;
+    }
+
+    /**
+     * @param flowName the flowName to set
+     */
+    public void setFlowName(String flowName) {
+        this.flowName = flowName;
     }
 
 }

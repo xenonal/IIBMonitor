@@ -7,7 +7,6 @@ package iibmonitor.tri.data;
 
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.pcf.PCFMessageAgent;
-import iibmonitor.tri.conectivity.mq.Connect_MQ_PCFMessageAgent;
 
 /**
  *

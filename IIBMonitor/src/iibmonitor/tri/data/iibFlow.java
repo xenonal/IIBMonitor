@@ -5,7 +5,7 @@
  */
 package iibmonitor.tri.data;
 import com.ibm.mq.pcf.PCFMessageAgent;
-import iibmonitor.trI.listener.MQListener;
+import iibmonitor.tri.listener.MQListener;
 import iibmonitor.tri.event.MQEvent;
 import java.util.*;
 
@@ -16,20 +16,24 @@ import java.util.*;
 public class iibFlow {
     
     private String name;
+    private String resourceStatsTopic;
     private String isRunning;
     private String version; // monitor will need to be set up on this to look at the current and if the version is diffrent for the broker to apply heavier monitoring
     private ArrayList<Queue> queues;
+    private String deployedPolicy;
    
   
     
     public iibFlow(){
         
     }
-    public iibFlow(String name, String isRunning, String version, ArrayList<Queue> queues){
+    public iibFlow(String name, String resourceStatsTopic, String isRunning, String version, ArrayList<Queue> queues, String deployedPolicy){
         this.name = name;
+        this.resourceStatsTopic = resourceStatsTopic;
         this.isRunning = isRunning;
         this.version = version;
         this.queues = queues;
+        this.deployedPolicy = deployedPolicy;
     }
 
     /**
@@ -86,6 +90,34 @@ public class iibFlow {
      */
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    /**
+     * @return the resourceStatsTopic
+     */
+    public String getResourceStatsTopic() {
+        return resourceStatsTopic;
+    }
+
+    /**
+     * @param resourceStatsTopic the resourceStatsTopic to set
+     */
+    public void setResourceStatsTopic(String resourceStatsTopic) {
+        this.resourceStatsTopic = resourceStatsTopic;
+    }
+
+    /**
+     * @return the deployedPolicy
+     */
+    public String getDeployedPolicy() {
+        return deployedPolicy;
+    }
+
+    /**
+     * @param deployedPolicy the deployedPolicy to set
+     */
+    public void setDeployedPolicy(String deployedPolicy) {
+        this.deployedPolicy = deployedPolicy;
     }
 
     
